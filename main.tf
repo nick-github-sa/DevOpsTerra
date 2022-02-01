@@ -1,0 +1,41 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "2.94.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+}
+
+# Create a resource group
+resource "azurerm_resource_group" "example" {
+  name     = "terramainrg"
+  location = "southafricanorth"
+}
+
+resource "azurerm_container_group" "tfcg_test" {
+    name = "weatherapi"
+    location = azurerm_resource_group.example.location
+    resource_group_name = azurerm_resource_group.example.name
+
+    ip_address_type = "public"
+    dns_name_label = "nicksdockerwa"
+    os_type = "Linux"
+
+    container {
+      name = "weatherapi"
+      image = "nicksdockerhub/weatherapi"
+      cpu = "1"
+      memory = "1"
+
+      ports {
+          port = 80
+          protocol = "TCP"
+      }
+    }
+}
