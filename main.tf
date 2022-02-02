@@ -20,6 +20,11 @@ provider "azurerm" {
   features {}
 }
 
+variable "imagebuild" {
+  type = string
+  description = "Latest Image Build"
+  
+}
 # Create a resource group
 resource "azurerm_resource_group" "example" {
   name     = "terramainrg"
@@ -37,7 +42,7 @@ resource "azurerm_container_group" "tfcg_test" {
 
     container {
       name = "weatherapi"
-      image = "nicksdockerhub/weatherapi"
+      image = "nicksdockerhub/weatherapi:${var.imagebuild}"
       cpu = "1"
       memory = "1"
 
