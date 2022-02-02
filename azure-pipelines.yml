@@ -32,9 +32,10 @@ stages:
   displayName: 'Terraforming on Azure....'
   dependsOn: Build
   jobs:
-  - displayName: 'Provisioning Container Instance'
+  - job: Provision
+    displayName: 'Provisioning Container Instance'
     pool:
-    vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'
     variables:
     - group: TerraformServicePrinciple
     steps:
